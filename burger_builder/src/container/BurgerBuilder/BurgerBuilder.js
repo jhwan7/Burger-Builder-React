@@ -42,7 +42,10 @@ class BurgerBuilder extends Component{
     }
     removeIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
-       
+        // If there are no ingredients, don't proceed.
+        if(oldCount <= 0) {
+            return;
+        }
         const updatedCount = oldCount + -1;
         // Non-mutable way of changing data
         const updatedIngredients = {
@@ -60,10 +63,23 @@ class BurgerBuilder extends Component{
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
     }
     render () {
+        // Create a copy of the ingredients state
+        const disabledInfo = {
+            ...this.state.ingredients
+        };
+        for (let key in disabledInfo) {
+            // Iterate through each object, if value is less or equal to 0, retur true to the array
+            // Now holds information on which key (type) should be disabled.
+            disabledInfo[key] = disabledInfo[key] <=0;
+        }
         return (
             <Aux>
                 <Burger ingredients = {this.state.ingredients}/>
-                <BuildControls ingredientAdded = {this.addIngredientHandler} ingredientRemoved = {this.removeIngredientHandler}/>
+                <BuildControls 
+                    ingredientAdded = {this.addIngredientHandler}
+                    ingredientRemoved = {this.removeIngredientHandler}
+                    disabled = {disabledInfo}
+                />
             </Aux>
         )
     };
