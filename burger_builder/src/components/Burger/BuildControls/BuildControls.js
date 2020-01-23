@@ -23,7 +23,7 @@ const buildControls = (props) => (
                 // Received array of boolean values for each type. Access each type using ctrl from mapping
                 disabled = {props.disabled[ctrl.type]}/>
         ))}
-        <button className = {styles.OrderButton} disabled = {!props.purchasable}>ORDER NOW</button>
+        <button className = {styles.OrderButton} disabled = {!props.purchasable} onClick = {props.ordered}>ORDER NOW</button>
     </div>
 );
 
