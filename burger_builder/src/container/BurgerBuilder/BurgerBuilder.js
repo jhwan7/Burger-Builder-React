@@ -90,6 +90,10 @@ class BurgerBuilder extends Component{
     orderCancleHandler = () => {
         this.setState({orderClicked: false});
     }
+
+    purchaseHandler = () => {
+        alert('Continued');
+    }
     
     render () {
         // Create a copy of the ingredients state
@@ -104,7 +108,7 @@ class BurgerBuilder extends Component{
         return (
             <Aux>
                 <Modal show = {this.state.orderClicked} modalClosed = {this.orderCancleHandler}>
-                    <OrderSummary ingredients = {this.state.ingredients}/>
+                    <OrderSummary price = {this.state.totalPrice} ingredients = {this.state.ingredients} cancel = {this.orderCancleHandler} success = {this.purchaseHandler}/>
                 </Modal>
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls 
