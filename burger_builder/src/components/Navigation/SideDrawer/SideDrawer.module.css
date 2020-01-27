@@ -31,4 +31,14 @@
     height: 11%;
     margin-bottom: 32px;
 }
+.Logo img {
+    width: 100%;
+}
+
+@media (max-width: 499px) {
+    .Logo {
+        height: auto;
+        width: 80%;    
+    }
+}
 
