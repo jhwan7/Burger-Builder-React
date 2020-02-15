@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-import Aux from '../../hoc/Auxilary'
+import Aux from '../Auxilary/Auxilary'
 
-import Toolbar from '../Navigation/Toolbar/Toolbar'
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
 
 import styles from './Layout.module.css'
 
-import SideDrawer from '../Navigation/SideDrawer/SideDrawer'
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer'
 
 
 class Layout extends Component {

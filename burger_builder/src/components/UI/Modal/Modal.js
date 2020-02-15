@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import styles from './Modal.module.css'
-import Aux from '../../../hoc/Auxilary'
+import Aux from '../../../hoc/Auxilary/Auxilary'
 import Backdrop from '../Backdrop/Backdrop'
 
 class Modal extends Component {
@@ -10,7 +10,7 @@ class Modal extends Component {
         return nextProps.show !== this.props.show;
     }
     //Debugging purposes. Activates when component re-renders
-    componentWillUpdate () {
+    componentDidUpdate () {
         console.log('[Modal] will update');
     }
     render() {
