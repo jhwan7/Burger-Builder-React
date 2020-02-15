@@ -107,8 +107,13 @@ class BurgerBuilder extends Component{
         }
         return (
             <Aux>
+                {/* Improve performance by rendering Modal, Order summary only when clicked */}
                 <Modal show = {this.state.orderClicked} modalClosed = {this.orderCancleHandler}>
-                    <OrderSummary price = {this.state.totalPrice} ingredients = {this.state.ingredients} cancel = {this.orderCancleHandler} success = {this.purchaseHandler}/>
+                    <OrderSummary 
+                        price = {this.state.totalPrice} 
+                        ingredients = {this.state.ingredients} 
+                        cancel = {this.orderCancleHandler} 
+                        success = {this.purchaseHandler}/>
                 </Modal>
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls 
