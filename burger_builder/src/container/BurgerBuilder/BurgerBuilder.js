@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 
-import Aux from '../../hoc/Auxilary/Auxilary'
-import Burger from '../../components/Burger/Burger'
-import BuildControls from '../../components/Burger/BuildControls/BuildControls'
-import Modal from '../../components/UI/Modal/Modal'
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
-import axios from '../../axios-order'
+import Aux from '../../hoc/Auxilary/Auxilary';
+import Burger from '../../components/Burger/Burger';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-order';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -24,7 +25,8 @@ class BurgerBuilder extends Component{
         },
         totalPrice: 4.00,
         purchasable: false,
-        orderClicked: false
+        orderClicked: false,
+        loading: false
     };
 
     updatePurchaseState (updatedIngredients) {
@@ -94,6 +96,7 @@ class BurgerBuilder extends Component{
     }
 
     purchaseHandler = () => {
+        this.setState({loading: true});
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
@@ -109,8 +112,12 @@ class BurgerBuilder extends Component{
             }
         }
         axios.post('/orders.json', order)
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
+            .then(response => {
+                this.setState({loading: false, orderClicked: false});
+            })
+            .catch(err => {
+                this.setState({loading: false, orderClicked: false});
+            })
 
     }
     
@@ -124,15 +131,21 @@ class BurgerBuilder extends Component{
             // Now holds information on which key (type) should be disabled.
             disabledInfo[key] = disabledInfo[key] <=0;
         }
+        let orderSummary = <OrderSummary 
+            price = {this.state.totalPrice} 
+            ingredients = {this.state.ingredients} 
+            cancel = {this.orderCancleHandler} 
+            success = {this.purchaseHandler}/>;
+
+        if (this.state.loading) {
+            orderSummary = <Spinner />
+        }
+
         return (
             <Aux>
                 {/* Improve performance by rendering Modal, Order summary only when clicked */}
                 <Modal show = {this.state.orderClicked} modalClosed = {this.orderCancleHandler}>
-                    <OrderSummary 
-                        price = {this.state.totalPrice} 
-                        ingredients = {this.state.ingredients} 
-                        cancel = {this.orderCancleHandler} 
-                        success = {this.purchaseHandler}/>
+                    {orderSummary}
                 </Modal>
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls 
